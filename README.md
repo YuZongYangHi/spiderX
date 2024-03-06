@@ -4,7 +4,8 @@ SpiderX是一款完全开源一站式运维管理平台，拥有完整的RBAC权
 
 ### 在线体验
 [点击访问](https://spider.igolang.cn)
-用户名: guest 密码: guest-1234
+用户名: guest 
+密码: guest-1234
 
 ![image](docs/img/login.jpg)
 ![image](docs/img/server-detail.jpg)
