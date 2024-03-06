@@ -2,7 +2,8 @@
 
 SpiderX是一款完全开源一站式运维管理平台，拥有完整的RBAC权限控制、CMDB资产管理、OA工作流引擎功能、日志审计等功能
 
-### [演示地址](https://spider.igolang.cn)
+### 在线体验
+[点击访问](https://spider.igolang.cn)
 - 用户名: guest
 - 密码: guest-1234
 
