@@ -79,13 +79,12 @@ password: Aa123456
 - 装机管理
 - 监控管理
 
+## 联系我们
+- 邮箱: 2747582092@qq.com
 - 项目迭代知识库(反馈)：https://www.yuque.com/ellison-wxun9/zrt42c
 - 开源项目地址：https://github.com/YuZongYangHi/spiderX
 - 演示地址：https://spider.igolang.cn
 - 技术论坛：https://igolang.cn
-
-## 联系我们
-邮箱: 2747582092@qq.com
-
+- 
 ![image](docs/img/vx-group.jpg)
 
