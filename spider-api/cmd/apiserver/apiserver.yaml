@@ -1,0 +1,39 @@
+appname: spider-apiserver
+language: zh_cn
+logger:
+  level: DEBUG
+listen:
+  host: 0.0.0.0
+  port: 1998
+  debug: true
+  graceful_shutdown_timeout: 30s
+db:
+  name: spider
+  user: root
+  host: xxx
+  port: 3306
+  password: xx
+cache:
+  prefix: "spider_apiserver"
+  master: ""
+  hosts:
+    - 1.1.1.1:6379
+  db: 7
+  password: xx
+  type: stand-alone
+security:
+  account_salt: ""
+  jwt_salt: ""
+cookie:
+  expires: 24h
+sentry:
+  dsn: ""
+common:
+  user_photo_path: /img/spiderx.png
+  upload_path: /tmp/spider/upload
+mail:
+  station_name: spiderX
+  host: ""
+  user: ""
+  password: ""
+  port: "465"

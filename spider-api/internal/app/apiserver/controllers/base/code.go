@@ -1,0 +1,18 @@
+package base
+
+const (
+	HTTP200Code = 200
+	HTTP201Code = 201
+	HTTP204Code = 204
+	HTTP301Code = 301
+	HTTP302Code = 302
+	HTTP400Code = 400
+	HTTP401Code = 401
+	HTTP403Code = 403
+	HTTP404Code = 404
+	HTTP405Code = 405
+	HTTP500Code = 500
+	HTTP502Code = 502
+	HTTP503Code = 503
+	HTTP504Code = 504
+)

@@ -1,0 +1,14 @@
+logger:
+  info: DEBUG
+http:
+  addr: 0.0.0.0
+  port: 1999
+database:
+  name: spider
+  user: root
+  host: 172.28.193.139
+  port: 33306
+  password: igolang.cn
+auth:
+  jwtSalt: "zmbs75q8sPbnYhWi"
+
