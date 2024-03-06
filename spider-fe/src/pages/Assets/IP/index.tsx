@@ -1,0 +1,262 @@
+import {useIntl, useModel} from "@@/exports";
+import React, {useRef, useState} from "react";
+import {ProColumns} from "@ant-design/pro-components";
+import {fetchParamsType} from "@/util/ProTableRequest/type";
+import {
+  createIp,
+  deleteIp,
+  updateIp,
+  queryIpList
+} from "@/services/Assets/Ip/api";
+import {queryIpRangeList} from '@/services/Assets/IpRange/api'
+import {DesignProTable} from "@/components/ProTable/typing";
+import {ToolBarProps} from "@ant-design/pro-table/es/components/ToolBar";
+import {
+  checkUserCreatePermissions, checkUserDeletePermissions,
+  checkUserUpdatePermissions,
+  assetsIpPermissionsMenuKeys
+} from "@/access";
+import {Button, Tag} from "antd";
+import ProTable from "@/components/ProTable";
+import {clickExtender} from "@/components/Style/style";
+import {ProModelCreateFormItems, ProModelUpdateFormItems} from "./form";
+import DesignProModalForm from "@/components/ProModal";
+import {RemoteRequestSelectSearch} from "@/handler/Request/request";
+import ColumnConvert from '@/util/ProTableColumnConvert'
+import {nodeOperatorFilter} from "@/util/dataConvert";
+
+export default () => {
+  const {initialState} = useModel("@@initialState")
+  const {userMenuPermissions} = initialState ?? {};
+  const tableRef = useRef();
+  const intl = useIntl();
+  const [currentRow, setCurrentRow] = useState<IdcResponse.AzInfo>();
+  const proModalUpdateRef = useRef(null);
+  const proModalCreateRef = useRef(null);
+  const [searchIpRange, setSearchIpRange] = useState("");
+  const columns: ProColumns[] = [
+    {
+      title: intl.formatMessage({id: "idc.column.id"}),
+      dataIndex: "id",
+      hideInSearch: true,
+      width: 80,
+      fixed: 'left',
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.ip"}),
+      dataIndex: "ip",
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.netmask"}),
+      dataIndex: "netmask",
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.gateway"}),
+      dataIndex: "gateway",
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.range.column.cidr"}),
+      dataIndex: "ipRangeId",
+      valueType: 'select',
+      choices: (value: number, record: any) => {return record.ipRange.cidr},
+      request: () => {
+        const params: handlerRequest.RemoteSelectSearchParams = {
+          option: {
+            label: "cidr",
+            value: "id"
+          },
+          params: {},
+          request: queryIpRangeList
+        }
+
+        if (searchIpRange !== "") {
+          params.params["filter"] = `cidr=${searchIpRange}`
+        }
+        return RemoteRequestSelectSearch(params)
+      },
+      fieldProps: {
+        allowClear: true,
+        showSearch: true,
+        onSearch: (value: string) => {
+          setSearchIpRange(value)
+        }
+      },
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.env"}),
+      dataIndex: "env",
+      valueType: 'select',
+      valueEnum: ColumnConvert["assets.ip.env"],
+      choices: (value: number, record: any) => ColumnConvert["assets.ip.env"][record.env].text,
+      render: (_, record) => <Tag color={ColumnConvert["assets.ip.env"][record.env].color}>{ColumnConvert["assets.ip.env"][record.env].text}</Tag>
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.type"}),
+      dataIndex: "type",
+      valueType: 'select',
+      valueEnum: ColumnConvert["assets.ip.type"],
+      choices: (value: number, record: any) => ColumnConvert["assets.ip.type"][record.type].text,
+      render: (_, record) => <Tag color={ColumnConvert["assets.ip.type"][record.type].color}>{ColumnConvert["assets.ip.type"][record.type].text}</Tag>
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.version"}),
+      dataIndex: "version",
+      valueType: 'select',
+      valueEnum: ColumnConvert["assets.ip.version"],
+      choices: (value: number, record: any) => ColumnConvert["assets.ip.version"][record.version].text,
+      render: (_, record) => <Tag color={ColumnConvert["assets.ip.version"][record.version].color}>{ColumnConvert["assets.ip.version"][record.version].text}</Tag>
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.operator"}),
+      dataIndex: "operator",
+      valueType: 'select',
+      choices: (value: number, record: any) => nodeOperatorFilter[record.operator].text,
+      valueEnum: nodeOperatorFilter
+    },
+
+    {
+      title: intl.formatMessage({id: "assets.ip.column.status"}),
+      dataIndex: "status",
+      valueType: 'select',
+      valueEnum: ColumnConvert["assets.ip.status"],
+      choices: (value: number, record: any) => ColumnConvert["assets.ip.status"][record.status].text,
+    },
+    {
+      title: intl.formatMessage({id: "idc.idc.column.creator"}),
+      dataIndex: "creator",
+      hideInSearch: true
+    },
+    {
+      title: intl.formatMessage({id: "assets.ip.column.description"}),
+      dataIndex: "description",
+      hideInSearch: true,
+    },
+    {
+      title: intl.formatMessage({id: "idc.idc.column.createTime"}),
+      dataIndex: "createTime",
+      hideInSearch: true,
+      valueType: 'dateTime'
+    },
+    {
+      title: intl.formatMessage({id: "idc.idc.column.updateTime"}),
+      dataIndex: "updateTime",
+      hideInSearch: true,
+      valueType: 'dateTime'
+    },
+    {
+      title: intl.formatMessage({id: 'pages.permissions.menu.list.role.grant.group.columns.operate'}),
+      key: 'option',
+      valueType: 'option',
+      fixed: 'right',
+      width: 150,
+      render: (dom, record) => [
+        checkUserUpdatePermissions(assetsIpPermissionsMenuKeys, userMenuPermissions) &&
+        <span style={clickExtender}
+              key="update"
+              onClick={()=>{
+                const value = record
+                setCurrentRow(value)
+                proModalUpdateRef.current?.proModalHandleOpen?.(true)}}
+        >
+            {intl.formatMessage({id: 'component.operate.edit'})}
+        </span>,
+        checkUserDeletePermissions(assetsIpPermissionsMenuKeys, userMenuPermissions) &&
+        <span style={clickExtender}
+              key="delete"
+              onClick={()=>{tableRef.current?.deleteAction(record.id)}}
+        >
+            {intl.formatMessage({id: 'component.operate.delete'})}
+        </span>,
+      ]
+    }
+  ]
+  const handleOnUpdateCancel = () => {
+    tableRef?.current?.actionRef?.current?.reload?.()
+    setCurrentRow({});
+  }
+
+  const multiSearchOption: DesignProTable.multiSearchOptionT[] = [
+    {
+      field: "multiSearchFieldIp",
+      label: "assets.ip.column.ip"
+    }
+  ]
+  const multiSearch: DesignProTable.multiSearchT = {
+    status: true,
+    options: multiSearchOption
+  }
+
+  const fetchParams: fetchParamsType = {
+    fetch: queryIpList,
+    requestQueryFieldOptions: ["cidr", "env", "version", "status", "operator", "ipRangeId", "ip", "netmask", "gateway"],
+    requestParams: []
+  }
+
+  const columnsState: DesignProTable.columnsStateT = {
+    status: true,
+    defaultValue:  {description: {show: false}}
+  }
+
+  const toolBarRender: ToolBarProps<any>['toolBarRender'] = [
+    checkUserCreatePermissions(assetsIpPermissionsMenuKeys, userMenuPermissions) && <Button type='primary' onClick={()=>{proModalCreateRef.current?.proModalHandleOpen?.(true)}} >{intl.formatMessage({id: 'assets.node.toolBar.create'})}</Button>,
+  ]
+
+  const batchExport: DesignProTable.batchExportT = {
+    status: true,
+    fileName: "assets.ip.export.filename",
+    sheetName: "assets.ip.export.sheetName"
+  }
+
+  const TableProps: DesignProTable.T = {
+    columns: columns,
+    permissionsMenuKeys: assetsIpPermissionsMenuKeys,
+    fetchParams: fetchParams,
+    columnsState: columnsState,
+    toolBarRender: toolBarRender,
+    batchExport: batchExport,
+    deleteRequest: deleteIp,
+    defaultSize: 'small',
+    multiSearch
+  }
+
+  const ProModalUpdateParams: ProModal.Params = {
+    title: 'assets.ip.update.title',
+    handleOnCancel :handleOnUpdateCancel,
+    width: "510px",
+    // @ts-ignore
+    request: updateIp,
+    initialValues: currentRow,
+    formItems: ProModelUpdateFormItems(),
+    params: [currentRow && currentRow.id],
+    successMessage: 'component.form.edit.success',
+    errorMessage: 'component.form.edit.fail'
+  }
+
+  const ProModalCreateParams: ProModal.Params = {
+    title: 'assets.ip.create.title',
+    width: "510px",
+    // @ts-ignore
+    params: [],
+    initialValues: {},
+    formItems: ProModelCreateFormItems(),
+    handleOnCancel :handleOnUpdateCancel,
+    // @ts-ignore
+    request: createIp,
+    successMessage: 'component.form.create.success',
+    errorMessage: 'component.form.create.fail'
+  }
+
+  return (
+    <>
+      <ProTable {...TableProps} ref={tableRef} />
+      <DesignProModalForm
+        {...ProModalUpdateParams}
+        ref={proModalUpdateRef}
+      />
+      <DesignProModalForm
+        {...ProModalCreateParams}
+        ref={proModalCreateRef}
+      />
+    </>
+  )
+}

@@ -1,0 +1,32 @@
+.tree-title-extra-operate-inactive {
+  display: none;
+}
+
+.tree-title-extra-operate-active {
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  float: right;
+}
+
+.tree-search-result-box {
+  position: absolute;
+  min-height: 400px;
+  height: 100%;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.tree-search-result-title {
+  padding-bottom: 4px;
+  color: #bbbdbf;
+  font-size: 12px;
+  line-height: 18px;
+  border-bottom: 1px solid #ebedf0;
+}
+
+.tree-search-result-content {
+  cursor: pointer;
+  margin-bottom: 4px;
+}

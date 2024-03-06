@@ -1,0 +1,22 @@
+export default {
+  "dashboard.onCall.today.username": "今日值班",
+  "dashboard.onCall.today.datetime": "值班时间",
+  "dashboard.onCall.type.week": "周",
+  "dashboard.onCall.type.day": "天",
+  "dashboard.onCall.form.title": "更换值班",
+  "dashboard.onCall.form.currentUsername": "当前值班人",
+  "dashboard.onCall.form.historyUsername": "历史值班人",
+  "dashboard.onCall.form.datetime": "值班时间",
+  "admin.onCall.column.userIds": "抽签用户id",
+  "admin.onCall.column.users": "抽签用户列表",
+  "admin.onCall.column.dutyType": "值班纬度",
+  "admin.onCall.column.effectiveTime": "生效时间",
+  "admin.onCall.column.createTime": "创建时间",
+  "admin.onCall.column.updateTime": "更新时间",
+  "admin.onCall.column.option.edit": "编辑",
+  "admin.onCall.column.option.delete": "删除",
+  "admin.onCall.column.option.add": "创建",
+  "admin.onCall.create.title": "创建值班表抽签",
+  "admin.onCall.update.title": "修改值班表抽签",
+
+}
