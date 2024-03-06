@@ -1,0 +1,29 @@
+.ant-pro-form-login-logo {
+  width: unset;
+  height: unset;
+  margin-inline-end: 16px;
+  vertical-align: top;
+}
+
+.ant-pro-form-login-top {
+  margin-bottom: 24px;
+}
+
+.space-align-container-login {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  line-height: 36px;
+}
+
+
+.ant-btn-primary {
+  background-color: #13C2C2 !important;
+}
+
+.ant-pro-form-login-logo  {
+  width: unset;
+  height: unset;
+  margin-inline-end: 16px;
+  vertical-align: top;
+}

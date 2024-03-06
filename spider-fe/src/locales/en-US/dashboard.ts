@@ -1,0 +1,16 @@
+export default {
+  "dashboard.machine.count": "count",
+  "dashboard.machine.onLine": "onLine",
+  "dashboard.machine.underConstruction": "underConstruction",
+  "dashboard.machine.maintain": "maintain",
+  "dashboard.machine.init": "init",
+  "dashboard.machine.switch": "switch",
+  "dashboard.machine.router": "router",
+  "dashboard.machine.ip": "ip",
+  "dashboard.machine.cidr": "cidr",
+  "dashboard.machine.az": "az",
+  "dashboard.machine.idc": "idc",
+  "dashboard.machine.room": "room",
+  "dashboard.machine.rack": "rack",
+  "dashboard.machine.ticket.title": "ticket count",
+}
