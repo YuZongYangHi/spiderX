@@ -87,5 +87,6 @@ password: Aa123456
 - 开源项目地址：https://github.com/YuZongYangHi/spiderX
 - 演示地址：https://spider.igolang.cn
 - 技术论坛：https://igolang.cn
+- qq群：170286861
 ![image](docs/img/vx-group.jpg)
 
