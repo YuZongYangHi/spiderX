@@ -88,5 +88,6 @@ password: Aa123456
 - 演示地址：https://spider.igolang.cn
 - 技术论坛：https://igolang.cn
 - qq群：170286861
-![image](docs/img/vx-group.jpg)
+![image](https://github.com/YuZongYangHi/spiderX/assets/35584408/b8447ef8-65da-4b1d-9cc2-5d99f6af3b09)
+
 
